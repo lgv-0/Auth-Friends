@@ -1,4 +1,5 @@
 import React from "react";
+import Axios from "axios";
 
 export default class Login extends React.Component
 {
@@ -9,8 +10,16 @@ export default class Login extends React.Component
                 username:data.username.value,
                 password:data.password.value
             }
-            
-        console.log(Build);
+
+        Axios.post("http://localhost:5000/api/login", Build).then((response)=>
+            {
+                window.localStorage.setItem("NOTASPECIALAUTHTOKEN", response.data.payload);
+                this.props.history.push("/friends");
+            })
+            .catch((error)=>
+            {
+                console.log(error);
+            })
     }
 
     render()
